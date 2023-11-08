@@ -25,3 +25,4 @@ def contacts(request):
 
 def sidebar(request):
     return render(request, 'main/sidebar.html')
+
