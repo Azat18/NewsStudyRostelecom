@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+{% load static %}
+{% load bootstrap5 %}
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel ="stylesheet" href = "{% static 'main/css/style.css' %}">
+    {% bootstrap_css %}
+    {% bootstrap_javascript %}
+
+    </head>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-3" style="background-color:#7700FF">
+                <h1>Боковое меню</h1>
+            </div>
+
+            <div class="col-md-7">
+                <h1>Содержание</h1>
+                <br>
+                <p>«Ваши тропы у вас под ногами. Каждый увидит свою в должное время».</p>
+                <img src="https://i.playground.ru/p/PqKCrz7pEDugh-W2eV0eXw.jpeg">
+            </div>
+
+        </div>
+    </div>
+
+</body>
+</html>

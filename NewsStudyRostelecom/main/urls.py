@@ -9,6 +9,8 @@ urlpatterns = [
     path('contacts/', views.contacts, name = 'contacts'),
     path('content/', views.content, name = 'content'),
     path('sidebar/', views.sidebar),
+    path('main/', views.main),
+    path('menu/', views.menu),
 ]
 
 

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+{% load static %}
+{% load bootstrap5 %}
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel ="stylesheet" href = "{% static 'main/css/style.css' %}">
+    {% bootstrap_css %}
+    {% bootstrap_javascript %}
+
+    </head>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-3" style="background-color:#7381ff">
+                <div class="row"><h1>Меню</h1></div>
+                <div class="row"><h2><a href=""> Домой</a></h2></div>
+                <div class="row"><h2><a href=""> Новости</a></h2></div>
+                <div class="row"><h2><a href=""> Мой профиль</a></h2></div>
+                <div class="row"><h2><a href=""> Регистрация</a></h2></div>
+                <div class="row"><h2><a href=""> Вход в аккаунт</a></h2></div>
+            </div>
+
+
+
+            <div class="col-md-7">
+                <h1></h1>
+                <br>
+                <p></p>
+
+            </div>
+
+        </div>
+    </div>
+
+</body>
+</html>

@@ -3,15 +3,21 @@ body {
  background-color: #FFFFFF;
 }
 
-
+img {width: 500px; }
 .news1 {
 margin: 70px;
 color: blue;
 }*
 
+h1, h2, h3, h4, h5, h6 {
+  color: #FFFFFF;
+  margin: 0 0 10px;
+  font-weight: 700;
+}
 
-.news1 h2{
-   color:green;
+a{
+    text-decoration:none;
+    color: #FFFFFF;
 }
 #news2{
 color:blue;
