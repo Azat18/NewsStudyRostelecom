@@ -5,12 +5,15 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <title>{{title}}</title>
     <link rel ="stylesheet" href = "{% static 'main/css/style.css' %}">
     {% bootstrap_css %}
     {% bootstrap_javascript %}
-
     </head>
 <body>
+
+
+
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-3" style="background-color:#7700FF">
@@ -21,8 +24,36 @@
                 <h1>Содержание</h1>
                 <br>
                 <p>«Ваши тропы у вас под ногами. Каждый увидит свою в должное время».</p>
-                <img src="https://i.playground.ru/p/PqKCrz7pEDugh-W2eV0eXw.jpeg">
+                <img width="500px" height="auto" src="https://i.playground.ru/p/PqKCrz7pEDugh-W2eV0eXw.jpeg" alt="Изображения пока нет">
             </div>
+
+            <div class="note1">
+                <h2>Запись 1</h2>
+                <p>Да, это запись</p>
+            </div>
+
+             <div class="note2">
+                <h2>Запись 2</h2>
+                <p>И это запись</p>
+            </div>
+
+            <div id="note5">
+                <h2>Запись 3</h2>
+                <p>Ну и это запись</p>
+            </div>
+
+            <!--<div>
+                <table border="1">
+                    <th>Ячейка заголовка 1</th>
+                    <th>Ячейка заголовка 2</th>
+                    <tr>
+                        <td>Текст ячейки</td>
+                    </tr>
+                     <tr>
+                        <td colspan="2">Текст ячейки 1</td>
+                    </tr>
+                </table>
+            </div>-->
 
         </div>
     </div>

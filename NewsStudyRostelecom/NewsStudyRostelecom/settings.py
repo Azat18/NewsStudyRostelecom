@@ -11,6 +11,9 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
+# Импорт для динамической таблицы
+import os, inspect
+import django_dyn_dt
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -22,9 +25,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-$x9!mmc$u)uryr+bug!!%!q&-1mgq489v6ap83x!lipjxv#is7'
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+#Для проверки своей страницы 404, конфигурация такая:
+#DEBUG = False
+#ALLOWED_HOSTS = ["*"]
 
+# SECURITY WARNING: don't run with debug turned on in production! Режим отладки
+DEBUG = True
 ALLOWED_HOSTS = []
 
 
@@ -38,7 +44,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'main',
-    'home',
+    'magazine',
     'travel',
     'bootstrap5',
     ]
@@ -55,10 +61,13 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'NewsStudyRostelecom.urls'
 
+TEMPLATE_DIR_DATATB = os.path.join(BASE_DIR, "django_dyn_dt/templates") #Для динамической таблицы
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR/'all_apps/templates',
+                 TEMPLATE_DIR_DATATB],# Для динамической таблицы
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -121,7 +130,20 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+STATICFILES_DIRS = [
+   BASE_DIR / "static",
+   "magazine/static/",
+   "travel/static/",
+
+]
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+# DYNAMIC_DATATB = {
+#     # SLUG -> Import_PATH Для динамической таблицы
+#     'books': "main.models.Book",
+# }

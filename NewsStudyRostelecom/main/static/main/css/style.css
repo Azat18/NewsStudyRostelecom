@@ -3,14 +3,14 @@ body {
  background-color: #FFFFFF;
 }
 
-img {width: 500px; }
+/*img {width: 500px; }
 .news1 {
 margin: 70px;
 color: blue;
-}*
+}*/
 
 h1, h2, h3, h4, h5, h6 {
-  color: #FFFFFF;
+  color: #blue;
   margin: 0 0 10px;
   font-weight: 700;
 }
@@ -23,12 +23,27 @@ a{
 color:blue;
 }
 
-
-h2{
-   color:yellow;
-}
-
-
 div {
 margin: 50px;
 }
+
+.note1 {
+margin: 75px;
+color: blue
+}
+
+.note2 {
+margin: 100px;
+color: green
+}
+
+
+#note5 {
+margin: 50px;
+color: yellow
+}
+
+
+
+.note1 h2{
+color: green;}
