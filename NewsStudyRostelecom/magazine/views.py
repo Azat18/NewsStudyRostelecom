@@ -4,6 +4,7 @@ def index(request):
     #return render(request, 'general.html')
     return render(request, 'magazine/index.html')
 def account(request):
+
     return render(request, 'account/index.html')
 
 def news(request):
