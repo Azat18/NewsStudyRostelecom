@@ -109,18 +109,19 @@
 <h1>Аккаунт пользователя</h1>
 <form method="post">
     {% csrf_token %}
+    <div class="container">
   <div class="row">
     <div class="col-md" style="display:inline-block;">
         <p><label> Имя </label></p>
-        <br>
+        <br><br>
         <p><label> Фамилия </label></p>
         <br>
         <p><label> День рождения </label></p>
         <br>
         <p><label> Город </label></p>
-        <br>
+      <br><br>
         <p><label> Телефон </label></p>
-        <br>
+
     </div>
     <div class="col-md" style="display:inline-block;">
         <p><input type="text" name="sname" align="right"></p>
@@ -132,10 +133,10 @@
         <p><input type="text" name="fname"></p>
         <br>
         <p><input type="text" name="sname" align="right"></p>
-        <br>
     </div>
   </div>
 <div class="row">
+    </div>
 <div class="col-md-5" style="display:inline-block;">
     <input class="btn-primary" type="submit" value="Сохранить">
 </div></div>
