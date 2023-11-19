@@ -75,9 +75,9 @@ def main(request):
 def menu(request):
     return render(request, 'main/menu.html')
 
-#def custom_404(request, exeption, exception=None):
-   #return render(request, '.html')
-   #return HttpResponse(f'Ой: {exception}')
+# def page404(request, exeption, exception=None):
+#     return render(request, 'magazine/page404.html')
+#    #return HttpResponse(f'Ой: {exception}')
 
 def account(request):
     return render(request, 'magazine/account.html')

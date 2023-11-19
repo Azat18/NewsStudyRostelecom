@@ -14,6 +14,7 @@ from pathlib import Path
 # Импорт для динамической таблицы
 import os, inspect
 import django_dyn_dt
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -26,8 +27,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-$x9!mmc$u)uryr+bug!!%!q&-1mgq489v6ap83x!lipjxv#is7'
 
 #Для проверки своей страницы 404, конфигурация такая:
-#DEBUG = False
-#ALLOWED_HOSTS = ["*"]
+# DEBUG = False
+# ALLOWED_HOSTS = ["*"]
 
 # SECURITY WARNING: don't run with debug turned on in production! Режим отладки
 DEBUG = True
@@ -134,8 +135,11 @@ STATICFILES_DIRS = [
    BASE_DIR / "static",
    "magazine/static/",
    "travel/static/",
-
 ]
+
+MEDIA_URL = 'media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field

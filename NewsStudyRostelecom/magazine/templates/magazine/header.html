@@ -1,35 +1,53 @@
 {% load static %}
+{% load bootstrap5 %}
    <!-- HEADER -->
 <div class="body_wrapper">
   <div class="center">
-
     <div class="header_area">
-      <div class="logo floatleft"><a href="#"><img src="{% static 'magazine/images/logo.png' %}" alt="" /></a></div>
+      <!-- Название -->
+      <div class="col-md-3" style="height:100px">
+<!--      <div class="text-left" style="margin-top:75px">-->
+<!--      </div>-->
+          <br><br><br>
+        <span class="fs-5 d-none d-lg-block responsive-title" style="margin-top: 300px">Телеграф</span>
+          <br><br><br>
+          <span class="fs-5 d-none d-lg-block responsive-title_1" style="margin-top: 100px">Сетевое издание</span>
+      </div>
+      <!-- /Название -->
+      <!-- Топ меню -->
+      <div class="col-md-6">
       <div class="top_menu floatleft">
         <ul>
           <li><a href="/magazine">Главная</a></li>
           <li><a href="#">О нас</a></li>
           <li><a href="#">Контакты</a></li>
 <!--          <li><a href="#">Подписка</a></li>-->
-          <li><a href="/account">Войти</a></li>
+          <li><a href="/account">Аккаунт</a></li>
         </ul>
       </div>
-      <div class="social_plus_search floatright">
+      </div>
+      <!-- /Топ меню -->
+      <!-- Соц. медиа -->
+      <div class="col-md-3">
+      <div class="container-fluid">
+      <div class="social_plus_search floatcenter">
         <div class="social">
           <ul>
-            <li><a href="#" class="twitter"></a></li>
-            <li><a href="#" class="facebook"></a></li>
+            <li><a href="#" class="vk"></a></li>
+            <li><a href="#" class="telegram"></a></li>
             <li><a href="#" class="feed"></a></li>
           </ul>
         </div>
-        <div class="search">
+        <div class="search floatcenter">
           <form action="#" method="post" id="search_form">
             <input type="text" value="Найти новость" id="s" />
             <input type="submit" id="searchform" value="search" />
             <input type="hidden" value="post" name="post_type" />
           </form>
         </div>
+      </div></div>
       </div>
+      <!-- /Соц. медиа -->
     </div>
   </div>
 </div>
