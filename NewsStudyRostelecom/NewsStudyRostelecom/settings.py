@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'main',
     'magazine',
     'travel',
+    'news',
     'bootstrap5',
     ]
 

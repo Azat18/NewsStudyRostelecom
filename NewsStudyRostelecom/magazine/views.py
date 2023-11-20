@@ -8,12 +8,11 @@ def account(request):
 
     return render(request, 'account/index.html')
 
-def news(request):
-    return render(request, 'news/index.html')
+def allnews(request):
+    return render(request, 'allnews/index.html')
 
 def news_1(request):
     return render(request, 'news_1/index.html')
-
 
 def demoform(request):
     form = DemoForm()
