@@ -1,7 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from .models import News, Product, Book
-import match
 
 def index(request):
     #value = 100

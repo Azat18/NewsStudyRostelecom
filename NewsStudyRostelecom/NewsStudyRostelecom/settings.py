@@ -11,9 +11,8 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
-# Импорт для динамической таблицы
+
 import os, inspect
-import django_dyn_dt
 import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -63,13 +62,12 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'NewsStudyRostelecom.urls'
 
-TEMPLATE_DIR_DATATB = os.path.join(BASE_DIR, "django_dyn_dt/templates") #Для динамической таблицы
 
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [BASE_DIR/'all_apps/templates',
-                 TEMPLATE_DIR_DATATB],# Для динамической таблицы
+                ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -148,7 +146,3 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
-# DYNAMIC_DATATB = {
-#     # SLUG -> Import_PATH Для динамической таблицы
-#     'books': "main.models.Book",
-# }
