@@ -82,11 +82,11 @@ def menu(request):
 def account(request):
     return render(request, 'magazine/account.html')
 
-def news(request):
-    return render(request, 'news/news.html')
+# def news(request):
+#     return render(request, 'news/news.html')
 
-def allnews(request):
-    return render(request, 'magazine/allnews.html')
+# def allnews(request):
+#     return render(request, 'magazine/allnews.html')
 
 def news_1(request):
     return render(request, 'magazine/news_1.html')

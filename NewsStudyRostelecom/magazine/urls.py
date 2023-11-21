@@ -8,7 +8,8 @@ urlpatterns = [
     path('showlastimage/',views.showlastmodel),
     path('', views.index, name = 'demo'),
     path('account/', views.account, name = 'account'),
-    path('allnews/', views.allnews, name = 'allnews'),
+    # path('allnews/', views.allnews, name = 'allnews'),
+    path('news/', views.news, name='news'),
     path('news_1/', views.news_1, name = 'news_1'),
    ]
 
