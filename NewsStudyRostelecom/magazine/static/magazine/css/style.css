@@ -10,7 +10,9 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 */
 
 *{margin:0; padding:0}
-body{font-family:Arial; font-size:12px; line-height:13px; background:url("images/site_bg.png") top center no-repeat fixed #000}
+.main_title{font-family:arial; font-weight:bold; font-size:50px; padding: 1px 30px; padding-top:5%}
+.main_subtitle{font-family:arial; font-weight:bold; font-size:25px; padding: 1px 30px; padding-top:5%}
+body{font-family:Arial; font-size:12px; line-height:13px; background:url("images/site_bg.png") top center no-repeat fixed #000000}
 a{color:#000; text-decoration:none}
 a:hover, a:active, a:focus{text-decoration:none; color:#000}
 input[type=text], input[type=password], textarea{border:1px solid #ddd; padding:5px}
@@ -33,7 +35,7 @@ div{overflow:hidden}
 #nav{display:block}
 #f_menu{display:block}
 .body_wrapper{background:url("images/body_bg.png") repeat; margin-top:30px; margin-bottom:30px}
-.header_area{}
+.header_area{border-bottom:1px dotted #000;}
 .responsive-title{font-family:arial; font-weight:bold; font-size:35px; padding: 30px 30px; padding-top:50%}
 .responsive-title_1{font-family:arial; font-weight:normal; font-size:15px; padding: 0px 30px; margin-left: 15px}
 @media (min-width: 1340px){.responsive-title{white-space:nowrap;}}
@@ -57,11 +59,11 @@ div{overflow:hidden}
 .search #search_form{}
 .search #s{width:87%}
 .search #searchform{background:url("images/search.png") no-repeat scroll 0 0 rgba(0,0,0,0); border:medium none; height:28px; margin-left:-4px; text-indent:-99999px; width:13%}
-.main_menu_area{overflow:visible; background:#0D0E0F; min-height:50px}
+.main_menu_area{overflow:visible; background:#302a32; min-height:50px}
 .main_menu_area ul{margin:0; padding:0; list-style:none}
 .main_menu_area ul li{float:left; position:relative}
 .main_menu_area ul li a{color:#FFF; display:block; font-family:'bebasregular'; font-size:15px; padding:18px 18.7px}
-.main_menu_area ul li a:hover{background:#CF0000}
+.main_menu_area ul li a:hover{background:#302a32}
 #nav li ul{transition:all 0.3s ease 0s; -moz-transition:all 0.3s ease 0s; -webkit-transition:all 0.3s ease 0s; -o-transition:all 0.3s ease 0s; -ms-transition:all 0.3s ease 0s}
 /* dropdown css level one*/
 .main_menu_area ul li ul{background:none repeat scroll 0 0 #0D0E0F; top:100px; position:absolute; width:215px; z-index:99999; right:-99999px}
@@ -133,3 +135,23 @@ div{overflow:hidden}
 .footer_menu ul li a{display:inline-block; padding:0 22px}
 .footer_menu ul li a:hover{}
 .copyright_text{line-height:17px; text-align:center}
+.contact_form{float:left; margin: 10px 10%; width:80%}
+
+#header {background: #000000; color: white;}
+div.breadcrumbs {
+   background: #000000;
+}
+.module caption{
+background: #000000;}
+
+.form-group label {
+   float: left;
+   text-align: left;
+   font-weight: normal;
+}
+.form-group select {
+   display: inline-block;
+   width: auto;
+   vertical-align: middle;
+}
+.d-none d-lg-block{color: white;}
