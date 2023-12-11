@@ -2,6 +2,6 @@ from django.shortcuts import render
 from django.http import HttpResponse
 
 def index(request):
-    return render(request, 'travel/index.html')
+    return render(request, 'travel/contact_page.html')
 
 
