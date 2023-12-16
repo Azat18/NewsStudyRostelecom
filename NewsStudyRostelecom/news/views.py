@@ -6,8 +6,12 @@ from django.contrib.auth.decorators import login_required
 from .forms import *
 from django.urls import reverse_lazy
 import json
+from django.core.paginator import Paginator
+
 #URL:    path('search_auto/', views.search_auto, name='search_auto'),
+mimetype = 'application/json'
 def search_auto(request):
+    print('Запрос')
     if request.headers.get('X-Requested-With') == 'XMLHttpRequest':# Альтернатива if request.is_ajax()
         q = request.GET.get('term','')
         articles = Article.objects.filter(title__icontains=q)
@@ -17,14 +21,14 @@ def search_auto(request):
             data = json.dumps(results)
     else:
         data = 'fail'
-        mimetype = 'application/json'
+        # mimetype = 'application/json'
     return HttpResponse(data,mimetype)
 
 def news(request):
    return render(request,'news/news.html')
 
-
-class ArticleDetailView(DetailView):
+from .utils import ViewCountMixin
+class ArticleDetailView(ViewCountMixin, DetailView):
     model = Article
     template_name = 'news/news_detail.html'
     context_object_name = 'article'
@@ -41,20 +45,18 @@ class ArticleUpdateView(UpdateView):
     template_name = 'news/create_article.html'
     fields = ['title','anouncement','text','tags']
 
+
 class ArticleDeleteView(DeleteView):
     model = Article
     success_url = reverse_lazy('news_index') #именованная ссылка или абсолютную
     template_name = 'news/delete_article.html'
 
-# class ArticleDeleteView(DeleteView):
-#     model = Article
-#     success_url = reverse_lazy('news_index') #именованная ссылка или абсолютную
-#     template_name = 'news/delete_article.html'
-
 #человек не аутентифицирован - отправляем на страницу другую
 # @login_required(login_url="/") Альтернатива ниже
+from users.utils import check_group
 from django.conf import settings
 @login_required(login_url=settings.LOGIN_URL)
+@check_group('Authors')
 def create_article(request):
     if request.method == 'POST':
         form = ArticleForm(request.POST, request.FILES)
@@ -73,6 +75,9 @@ def create_article(request):
     else:
         form = ArticleForm()
     return render(request,'news/create_article.html', {'form':form})
+
+from time import time
+
 def index(request):
     # пример применения пользовательского менеджера
     # articles = Article.published.all()
@@ -99,67 +104,12 @@ def index(request):
         selected_category = 0
         articles = Article.objects.all()
 
-    context = {'articles': articles, 'author_list': author_list, 'selected_author': selected_author,
-               'categories': categories, 'selected_category': selected_category}
+    total = len(articles)
+
+    p = Paginator(articles, 2)
+    page_number = request.GET.get('page')
+    page_obj = p.get_page(page_number)
+    context = {'articles': page_obj, 'author_list': author_list, 'selected_author': selected_author,
+               'categories': categories, 'selected_category': selected_category,'total':total,}
 
     return render(request, 'news/news_list.html', context)
-
-
-    # Работающий вариант
-    # articles = Article.objects.all()
-    # a = articles.first()
-    # categories = Article.categories
-    # titles = Article.title
-    # dates = Article.date
-    # t1 = Article.objects.filter(title__icontains="Новость")
-    # # print('Статья: ',a.title, 'Категории: ',a.categories)
-    # context = {'articles': articles}
-    # print(t1)
-    #
-    # author_list = User.objects.all()
-    # selected = 0
-    # if request.method == "POST":
-    #     print(request.POST)
-    #     selected = int(request.POST.get('author_filter'))
-    #     if selected == 0:
-    #         articles = Article.objects.all()
-    #     else:
-    #         articles = Article.objects.filter(author=selected)
-    #     print(connection.queries)
-    # else:
-    #     articles = Article.objects.all()
-    # context = {'articles': articles, 'author_list': author_list, 'selected': selected, 'categories': categories,}
-    # return render(request, 'news/news_list.html', context)
-
-
-   # articles = Article.objects.filter(author=request.user.id)
-   # print(articles)
-   # article = Article.objects.get(author=2)
-   # print(article.tags.all())
-   # tag = Tag.objects.filter(title='IT').first()
-   # tagged_news = Article.objects.filter(tags=tag)
-   # print(tagged_news)
-   # article = Article.objects.filter(title__contains='дня')
-   # article = Article.objects.filter(author=request.user)
-   # user_list = User.objects.all()
-   # for user in user_list:
-   #     print(Article.objects.filter(author=user))
-   # # print(user_list)
-   # context = {'article':article}
-   # return render(request, 'news/contact_page.html', context)
-
-
-# def detail(request, id):
-   # article = Article.objects.filter(id=id).first()
-   # print(article, type(article))
- # пример создания новости
-# author = User.objects.get(id=request.user.id)
-# article = Article(author=author,title='Заголовок1',
-#                   anouncement='Анонс', text='текст')
-# article.save()
-#пример итерирования по объектам QuerySet
-    # articles = Article.objects.all()
-    # s=''
-    # for article in articles:
-    #     s+=f'<h1>{article.title}</h1><br>'
-    # return HttpResponse(s)

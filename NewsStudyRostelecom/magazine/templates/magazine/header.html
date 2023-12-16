@@ -3,10 +3,36 @@
 {% bootstrap_css %}
 {% bootstrap_javascript %}
 
+<!-- jQuery !-->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"> </script>
+<!-- jQuery UI !-->
+<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+
+<script>
+  $(function() {
+    $("#search_input").autocomplete({
+      source: "{% url 'search_auto' %}",
+      select: function (event, ui) { //item selected
+        AutoCompleteSelectHandler(event, ui)
+      },
+      minLength: 2,
+    });
+  });
+
+  function AutoCompleteSelectHandler(event, ui)
+  {
+    var selectedObj = ui.item;
+  }
+
+</script>
+
 <!--<div class="body_wrapper">-->
   <div class="center">
+
       <div class="header_area">
           <div class="col-md-9">
+
               <div class="main_title">
                   <a href="/magazine/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-decoration-none" style="font-size: 50px; height:50px;color:#302a32;>
             <span class="fs-5 d-none d-lg-block responsive-title"">Телеграф</span>
@@ -16,7 +42,15 @@
               </div>
               <div class="main_subtitle" style="font-size: 18px; height:80px;color:#302a32;>
                   <span style="margin-top: 100px;">Сетевое издание</span>
+              <div class="row">
+
+            </div>
+
               </div>
+           <div class="search">
+                      <input id="search_input"></input>
+                      <button class="btn btn-primary" style="background:#302a32;"> Найти</button>
+                  </div>
               </div>
 
           {% if request.user.id %}  <!-- проверяем аутентификацию-->
@@ -24,7 +58,7 @@
               <div class="main_menu_area floatleft" style="height:230px; background:#FFFFFF">
                   <ul id="nav">
                       <li><button class="btn btn-primary dropdown-toggle col-11" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false" style="background:#302a32;">
-                          <img src="{{ request.user.account.account_image.url }}" alt="" width="25" height="25" class="rounded-circle me-5">
+                          <img src="{{ request.user.account.account_image.url }}" alt="" width="35px;" height="25px;" class="rounded-circle me-5">
                           <div class="d-none d-lg-block "> {{ request.user.username }} </div>
                           </button>
                           <ul style="background:#000;">
@@ -36,6 +70,7 @@
                       </li>
                   </ul>
                   </div>
+
           </div>
           {% else %} <!-- ссылки на регистрацию и аутентификацию-->
           <ul class="nav nav-pills flex-column mb-auto">
@@ -61,10 +96,17 @@
            <div class="alert alert-{{ message.tags }}">
                {{ message }}
            </div>
+
            {% endfor %}
            {% endif %}
+
+
+
       </div>
-  </div>
+</div>
+
+
+
 <!--</div>-->
 
 <!--<script type="text/javascript" src="{% static 'magazine/js/jquery-min.js' %}"></script>-->

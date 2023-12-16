@@ -1,11 +1,11 @@
 {% extends 'magazine/homebase.html' %}
 {% load static %}
-{% load bootstrap5 %}
+{% load users_extras %}
 {% load crispy_forms_tags %}
 {% block title %} {{ request.user.username }} - профиль{% endblock %}
 {% block sidebar %}{% endblock %}
 {% block slider %}{% endblock %}
-
+{% load bootstrap5 %}
 {% block body %}
 <!--<div class="body_wrapper">-->
 <div class="center">
@@ -36,11 +36,19 @@
                     <i class="fa fa-gear menu-icon"></i> <div class="d-none d-lg-block">Мой профиль</div>
                     </a>
                 </li>
+                {% if request.user|has_group:"Authors" %}
                 <li>
-                    <a href="#" {% if request.path  == '/myarticles/' %} class="link-active" aria-current="page" {% endif %} style="color:white;">
-                    <i class="fa fa-newspaper menu-icon"></i>  <div class="d-none d-lg-block"> Мои статьи</div>
+                    <a href="{% url 'my_news_list' %}" {% if request.resolver_match.view_name  == 'my_news_list' %} class="link-active" aria-current="page" {% endif %} style="color:white;">
+                    <i class="fa fa-pen-nib menu-icon"></i>  <div class="d-none d-lg-block"> Мои статьи</div>
                     </a>
                 </li>
+                {% endif %}
+                <li>
+                    <a href="#" {% if request.path  == '/myarticles/' %} class="link-active" aria-current="page" {% endif %} style="color:white;">
+                    <i class="fa fa-newspaper menu-icon"></i>  <div class="d-none d-lg-block"> Избранное</div>
+                    </a>
+                </li>
+
                 <li>
                     <a href="{% url 'logout' %}"  aria-current="page" style="color:white;">
                     <i class="fa fa-water-ladder menu-icon"></i>  <div class="d-none d-lg-block"> Выход из аккаунта</div>

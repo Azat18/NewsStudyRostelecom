@@ -1,8 +1,8 @@
-from django.shortcuts import render, HttpResponse, redirect
+from django.shortcuts import render, HttpResponseRedirect, redirect, HttpResponse
 from .models import *
 from .forms import *
 from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth import authenticate
+from django.contrib.auth import authenticate, login
 from django.contrib import messages
 from django.contrib.auth.models import Group
 
@@ -11,6 +11,25 @@ def profile(request):
     return render(request,'users/profile.html',context)
 
 from .forms import AccountUpdateForm, UserUpdateForm
+
+from django.contrib.auth.decorators import login_required
+from news.models import Article
+@login_required
+def add_to_favorites(request, id):
+    article = Article.objects.get(id=id)
+    #проверям есть ли такая закладка с этой новостью
+    bookmark = FavoriteArticle.objects.filter(user=request.user.id,
+                                              article=article)
+    if bookmark.exists():
+        bookmark.delete()
+        messages.warning(request,f"Новость {article.title} удалена из закладок")
+    else:
+        bookmark = FavoriteArticle.objects.create(user=request.user, article=article)
+        messages.success(request,f"Новость {article.title} добавлена в закладки")
+    return HttpResponseRedirect(request.META['HTTP_REFERER'])
+
+from .utils import check_group
+# @check_group('Authors')
 def profile_update(request):
     user = request.user
     account = Account.objects.get(user=user)
@@ -50,17 +69,25 @@ def registration(request):
         form = UserCreationForm(request.POST)
         if form.is_valid():
             user = form.save() #появляется новый пользователь
-            group = Group.objects.get(name='Authors')
-            user.groups.add(group)
+            category = request.POST['account_type']
+            if category == 'author':
+                group = Group.objects.get(name='Moderation')
+                user.groups.add(group)
+            else:
+                group = Group.objects.get(name='Readers')
+                user.groups.add(group)
             username = form.cleaned_data.get('username')
             password = form.cleaned_data.get('password1')
-            authenticate(username=username,password=password)
+            account = Account.objects.create(user=user, nickname=user.username)
+            user = authenticate(username=username, password=password)
+            login(request, user)
             messages.success(request,f'{username} был зарегистрирован!')
             return redirect('/magazine')
     else:
         form = UserCreationForm()
     context = {'form':form}
     return render(request,'users/registration.html',context)
+
 def contact_page(request):
     if request.method == "POST":
         form = ContactForm(request.POST)
@@ -80,3 +107,23 @@ def index(request):
     user_acc = Account.objects.get(user=request.user)
     print(user_acc.birthday, user_acc.gender)
     return HttpResponse('Приложение Users')
+
+from django.core.paginator import Paginator
+def my_news_list(request):
+    categories = Article.categories #создали перечень категорий
+    author = User.objects.get(id=request.user.id) #создали перечень авторов
+    articles = Article.objects.filter(author=author)
+    if request.method == "POST":
+        selected_category = int(request.POST.get('category_filter'))
+        if selected_category != 0: #фильтруем найденные результаты по категориям
+            articles = articles.filter(category__icontains=categories[selected_category-1][0])
+    else: #если страница открывется впервые
+        selected_category = 0
+    total = len(articles)
+    p = Paginator(articles,2)
+    page_number = request.GET.get('page')
+    page_obj = p.get_page(page_number)
+    context = {'articles': page_obj, 'total':total,
+               'categories':categories,'selected_category': selected_category}
+
+    return render(request,'users/my_news_list.html',context)
