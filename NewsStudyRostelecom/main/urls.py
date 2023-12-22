@@ -13,9 +13,7 @@ urlpatterns = [
     path('main/', views.main),
     path('menu/', views.menu),
     path('account/', views.account),
-    # path('allnews/', views.allnews),
     path('news_1/', views.news_1),
-    # path('news/', views.news_1),
-]
+ ]
 
 

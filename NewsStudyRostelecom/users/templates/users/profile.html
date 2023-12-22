@@ -1,4 +1,4 @@
-{% extends 'magazine/homebase.html' %}
+{% extends 'magazine/base.html' %}
 {% load static %}
 {% load users_extras %}
 {% load crispy_forms_tags %}
@@ -7,14 +7,14 @@
 {% block slider %}{% endblock %}
 {% load bootstrap5 %}
 {% block body %}
-<!--<div class="body_wrapper">-->
-<div class="center">
-    <div class="col-md-4 mb-3">
-        <aside>
+ <div class="center">
+      <div class="content_center">
+          <div class="col-md-4 mb-3">
+            <aside>
             <div class="container-fluid" style="background-color: #302a32; color: #000";>
         <!--    Подробнее про flex-классы: https://bootstrap-4.ru/docs/4.0/utilities/flex/-->
 <!--            d-none d-lg-block | Такой класс позвоялет спрятать элементы при отображении на экранах размером меньше lg-->
-            <a href="/magazine/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none" style="font-size: 23px; height:90px;>
+            <a href="/magazine/" class="d-flex align-items-center mb-5 mb-md-0 me-md-auto text-white text-decoration-none" style="font-size: 23px; height:90px;>
             <span class="fs-5 d-none d-lg-block responsive-title">
                 <span>Панель пользователя</span>
             </a>
@@ -154,5 +154,5 @@
 </div>
 </div>
   </div>
-<!--</div>-->
+</div>
 {% endblock %}

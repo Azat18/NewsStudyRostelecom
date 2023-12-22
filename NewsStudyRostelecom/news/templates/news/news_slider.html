@@ -1,0 +1,62 @@
+{% extends 'magazine/homebase.html' %}
+{% load static %}
+{% load bootstrap5 %}
+{% block title %} Главная страница {% endblock %}
+
+{% block content %}
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous">
+</script>
+<div class="content_center">
+    <div class="row">
+        <div id="carouselControls" class="carousel slide" data-ride="carousel" style="background:#302a32">
+            <div class="carousel-inner" role="listbox" style=" width:auto; height: 550px; !important;">
+                {% for article in articles %}
+                <div class="carousel-item {% if forloop.counter == 1 %} active {% endif %}">
+                    <div class="single_news">
+                        <div class="p-4 p-md-5 text-white rounded bg-#302a32">
+                            <div class="row">
+                                <div class="col-md-{% if article.image_set.all %}6{% else %}12 {% endif %} px-0" style="background:#302a32">
+                                    <h1 class="display-4 fst-italic"> {{ article.title }}</h1>
+                                    <p class="lead my-3">{{ article.anouncement }}</p>
+                                    <p class="lead mb-0"><a href="{% url 'news_detail' article.pk %}"
+                                                            class="text-white fw-bold">Полный текст..</a></p>
+                                    <p><small>Просмотры: {{ article.get_views }}</small></p>
+                                    <a class="btn btn-success" href="{% url 'favorites' article.pk %}"><i
+                                            class="fa fa-bookmark">В избранное</i></a>
+                                </div>
+                                {% if article.image_set.all %}
+                                <div class="col-md-6 px-0" style="background:#302a32">
+                                    <img src="{{ article.image_set.all.0.image.url }}"
+                                         style="width:100%; height:auto; border-radius:5px;">
+                                    <br>
+                                    <br>
+                                    <img src="{{ article.image_set.all.1.image.url }}"
+                                         style="width:100%; height:auto; border-radius:5px;">
+
+                                </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            <a class="carousel-control-prev" href="#carouselControls" role="button" data-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+            </a>
+            <a class="carousel-control-next" href="#carouselControls" role="button" data-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+            </a>
+        </div>
+    </div>
+    {% endblock %}

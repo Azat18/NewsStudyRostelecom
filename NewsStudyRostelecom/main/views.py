@@ -4,14 +4,7 @@ from .models import News, Product, Book
 
 
 def index(request):
-    #value = 100
-    # n1 = News('Новость 1', 'Текст 1', '05.05.2025')
-    # n2 = News('Новость 2', 'Текст 2', '10.05.2025')
-    # l = [n1, n2]
-    # context = {'title': 'Страница главная',
-    #            'header1': 'Заголовок страницы',
-    #            }
-    return render(request, 'magazine/homebase.html')
+    return render(request, 'news/news_slider.html')
 
 def get_demo(request,a,operation,b):
     if operation == 'minus':
