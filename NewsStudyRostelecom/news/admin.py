@@ -27,7 +27,7 @@ class ArticleImageInline(admin.TabularInline): # TabularInline вертикал�
     readonly_fields = ('id','image_tag') #Поля, которые не хотим менять
 class ArticleAdmin(admin.ModelAdmin):
     ordering = ['-date', 'title', 'author']
-    list_display = ['title', 'author', 'date','symbols_count', 'image_tag']
+    list_display = ['title', 'author', 'date', 'status', 'symbols_count', 'image_tag']
     list_filter = ['date', ArticleFilter]
     # list_display_links = ('date',)
     # list_editable = ['title']

@@ -5,14 +5,15 @@
       <!-- SIDEBAR -->
     <div class="main_menu_area">
       <ul id="nav">
+        <li><a href="{% url 'news_slider' %}">ГЛАВНАЯ</a></li>
         <li><a href="{% url 'news_index' %}">НОВОСТИ</a></li>
-        <li><a href="/tidings">СПОРТ</a></li>
-        <li><a href="#">ТЕХНОЛОГИИ</a></li>
-        <li><a href="#">БИЗНЕС</a></li>
-        <li><a href="#">КИНО</a></li>
-        <li><a href="#">ЛИЧНЫЕ ФИНАНСЫ</a></li>
-        <li><a href="#">КУЛЬТУРА</a></li>
-        <li><a href="#">КНИГИ</a>
+        <li><a href="{% url 'news_culture' %}">КУЛЬТУРА</a></li>
+        <li><a href="{% url 'news_business' %}">БИЗНЕС</a></li>
+        <li><a href="{% url 'news_science' %}">НАУКА</a></li>
+        <li><a href="{% url 'news_sport' %}">СПОРТ</a></li>
+        <li><a href="{% url 'news_travel' %}">ПУТЕШЕСТВИЯ</a></li>
+        <li><a href="{% url 'news_weather' %}">ПОГОДА</a></li>
+        <li><a href="{% url 'contact_page' %}">О НАС</a>
         </ul>
     </div>
     <!-- /SIDEBAR -->

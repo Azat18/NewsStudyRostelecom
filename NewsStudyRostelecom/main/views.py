@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from .models import News, Product, Book
 
+
 def index(request):
     #value = 100
     # n1 = News('Новость 1', 'Текст 1', '05.05.2025')
@@ -10,7 +11,7 @@ def index(request):
     # context = {'title': 'Страница главная',
     #            'header1': 'Заголовок страницы',
     #            }
-    return render(request, 'main/index.html')
+    return render(request, 'magazine/homebase.html')
 
 def get_demo(request,a,operation,b):
     if operation == 'minus':

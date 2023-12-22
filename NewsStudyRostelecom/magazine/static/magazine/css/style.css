@@ -4,7 +4,7 @@ Template URI: http://www.wpfreeware.com/news-reporter-wordpress-magazine-themes/
 Author: WpFreeware
 Author URI: http://www.wpfreeware.com
 Description: A Pro responsive magazine website template
-Version: 1.0 
+Version: 1.0
 License: GPL
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 */
@@ -125,9 +125,9 @@ div{overflow:hidden}
 .single_popular{}
 .single_popular p{margin-bottom:0}
 .single_popular h3{line-height:17px; margin-top:0}
-.footer_top_area{border-bottom:1px dotted #000; border-top:1px dotted #000; padding:20px 0; width:940px}
+.footer_top_area{border-bottom:1px dotted #000; padding:20px 0; width:940px}
 .inner_footer_top{width:730px; margin:0 auto}
-.footer_bottom_area{margin-top:15px}
+
 .footer_menu{margin-bottom:20px}
 .footer_menu ul{margin:0; padding:0; list-style:none}
 .footer_menu ul li{border-right:1px solid #000; display:inline}

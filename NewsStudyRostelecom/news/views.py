@@ -1,7 +1,7 @@
 from django.shortcuts import render, HttpResponse, redirect
 from .models import *
 from django.db import connection, reset_queries
-from django.views.generic import DetailView, DeleteView, UpdateView
+from django.views.generic import DetailView, DeleteView, UpdateView, ListView
 from django.contrib.auth.decorators import login_required
 from .forms import *
 from django.urls import reverse_lazy
@@ -23,6 +23,16 @@ def search_auto(request):
         data = 'fail'
         # mimetype = 'application/json'
     return HttpResponse(data,mimetype)
+
+class ArticleListView(ListView):
+    model = Article
+    template_name = 'article_list.html'
+    context_object_name = "articles"
+
+    def get_queryset(self):  # новый
+        query = self.request.GET.get('search_input')
+        articles = Article.objects.filter(title__icontains=query)
+        return articles
 
 def news(request):
    return render(request,'news/news.html')
@@ -141,9 +151,11 @@ def index(request):
         selected_author = 0
         selected_category = 0
         articles = Article.objects.all()
-
+    # сортировка от свежих к старым новостям
+    articles = articles.order_by('-date')
     total = len(articles)
-
+    for c in categories:
+        print(c[0])
     p = Paginator(articles, 2)
     page_number = request.GET.get('page')
     page_obj = p.get_page(page_number)
@@ -151,3 +163,199 @@ def index(request):
                'categories': categories, 'selected_category': selected_category,'total':total,}
 
     return render(request, 'news/news_list.html', context)
+
+# def index_c(request):
+#     categories = Article.categories
+#     for c in categories:
+#         articles = Article.objects.filter(category=c)
+#         author_list = User.objects.all()  # создали перечень авторов
+#
+#         if request.method == "POST":
+#             selected_author = int(request.POST.get('author_filter'))
+#             if selected_author == 0:  # выбраны все авторы
+#                 articles = articles
+#             else:
+#                 articles = articles.filter(author=selected_author)
+#         else:  # если страница открывется впервые
+#             selected_author = 0
+#             articles = articles
+#         total = len(articles)
+#
+#         p = Paginator(articles, 2)
+#         page_number = request.GET.get('page')
+#         page_obj = p.get_page(page_number)
+#         context = {'articles': page_obj, 'author_list': author_list, 'selected_author': selected_author,'total':total,}
+#
+#         url = 'news/culture_{c}.html'
+#         return render(request, url, context)
+#     print(url)
+def index_culture(request):
+    articles_c = Article.objects.filter(category='C')
+    author_list = User.objects.all()  # создали перечень авторов
+
+    if request.method == "POST":
+        selected_author = int(request.POST.get('author_filter'))
+        if selected_author == 0:  # выбраны все авторы
+            articles_c = articles_c
+        else:
+            articles_c = articles_c.filter(author=selected_author)
+    else:  # если страница открывется впервые
+        selected_author = 0
+        articles_c = articles_c
+
+    total = len(articles_c)
+
+    p = Paginator(articles_c, 2)
+    page_number = request.GET.get('page')
+    page_obj = p.get_page(page_number)
+    context = {'articles_c': page_obj, 'author_list': author_list, 'selected_author': selected_author,'total':total,}
+
+    return render(request, 'news/culture_news.html', context)
+
+def index_business(request):
+    articles_b = Article.objects.filter(category='B')
+    author_list = User.objects.all()  # создали перечень авторов
+
+    if request.method == "POST":
+        selected_author = int(request.POST.get('author_filter'))
+        if selected_author == 0:  # выбраны все авторы
+            articles_b = articles_b
+        else:
+            articles_b = articles_b.filter(author=selected_author)
+    else:  # если страница открывется впервые
+        selected_author = 0
+        articles_b = articles_b
+
+    total = len(articles_b)
+
+    p = Paginator(articles_b, 2)
+    page_number = request.GET.get('page')
+    page_obj = p.get_page(page_number)
+    context = {'articles_b': page_obj, 'author_list': author_list, 'selected_author': selected_author,'total':total,}
+
+    return render(request, 'news/business_news.html', context)
+
+def index_science(request):
+    articles_s = Article.objects.filter(category='S')
+    author_list = User.objects.all()  # создали перечень авторов
+
+    if request.method == "POST":
+        selected_author = int(request.POST.get('author_filter'))
+        if selected_author == 0:  # выбраны все авторы
+            articles = articles_s
+        else:
+            articles = articles_s.filter(author=selected_author)
+    else:  # если страница открывется впервые
+        selected_author = 0
+        articles = articles_s
+
+    total = len(articles)
+
+    p = Paginator(articles, 2)
+    page_number = request.GET.get('page')
+    page_obj = p.get_page(page_number)
+    context = {'articles': page_obj, 'author_list': author_list, 'selected_author': selected_author,'total':total,}
+
+    return render(request, 'news/science_news.html', context)
+
+def index_sport(request):
+    articles_sport = Article.objects.filter(category='N')
+    author_list = User.objects.all()  # создали перечень авторов
+
+    if request.method == "POST":
+        selected_author = int(request.POST.get('author_filter'))
+        if selected_author == 0:  # выбраны все авторы
+            articles = articles_sport
+        else:
+            articles = articles_sport.filter(author=selected_author)
+    else:  # если страница открывется впервые
+        selected_author = 0
+        articles = articles_sport
+
+    total = len(articles)
+
+    p = Paginator(articles, 2)
+    page_number = request.GET.get('page')
+    page_obj = p.get_page(page_number)
+    context = {'article':articles,'articles': page_obj, 'author_list': author_list, 'selected_author': selected_author,'total':total,}
+
+    return render(request, 'news/sport_news.html', context)
+
+def index_travel(request):
+    articles_t = Article.objects.filter(category='T')
+    author_list = User.objects.all()  # создали перечень авторов
+
+    if request.method == "POST":
+        selected_author = int(request.POST.get('author_filter'))
+        if selected_author == 0:  # выбраны все авторы
+            articles = articles_t
+        else:
+            articles = articles_t.filter(author=selected_author)
+    else:  # если страница открывется впервые
+        selected_author = 0
+        articles = articles_t
+
+    total = len(articles)
+
+    p = Paginator(articles, 2)
+    page_number = request.GET.get('page')
+    page_obj = p.get_page(page_number)
+    context = {'article':articles,'articles': page_obj, 'author_list': author_list, 'selected_author': selected_author,'total':total,}
+
+    return render(request, 'news/travel_news.html', context)
+
+def index_weather(request):
+    articles_w = Article.objects.filter(category='W')
+    author_list = User.objects.all()  # создали перечень авторов
+
+    if request.method == "POST":
+        selected_author = int(request.POST.get('author_filter'))
+        if selected_author == 0:  # выбраны все авторы
+            articles = articles_w
+        else:
+            articles = articles_w.filter(author=selected_author)
+    else:  # если страница открывется впервые
+        selected_author = 0
+        articles = articles_w
+
+    total = len(articles)
+
+    p = Paginator(articles, 2)
+    page_number = request.GET.get('page')
+    page_obj = p.get_page(page_number)
+    context = {'article':articles,'articles': page_obj, 'author_list': author_list, 'selected_author': selected_author,'total':total,}
+
+    return render(request, 'news/weather_news.html', context)
+
+def news_slider(request):
+    categories = Article.categories  # создали перечень категорий
+    author_list = User.objects.all()  # создали перечень авторов
+
+    if request.method == "POST":
+        selected_author = int(request.POST.get('author_filter'))
+        selected_category = int(request.POST.get('category_filter'))
+
+        if selected_author == 0:  # выбраны все авторы
+            articles = Article.objects.all()
+        else:
+            articles = Article.objects.filter(author=selected_author)
+        if selected_category != 0:  # фильтруем найденные по авторам результаты по категориям
+            articles = articles.filter(category__icontains=categories[selected_category - 1][0])
+
+
+    else:  # если страница открывется впервые
+        selected_author = 0
+        selected_category = 0
+        articles = Article.objects.all()
+    # сортировка от свежих к старым новостям
+    articles = articles.order_by('-date')
+
+    total = len(articles)
+
+    p = Paginator(articles, 3)
+    page_number = request.GET.get('page')
+    page_obj = p.get_page(page_number)
+    context = {'articles': page_obj, 'author_list': author_list, 'selected_author': selected_author,
+               'categories': categories, 'selected_category': selected_category,'total':total,}
+
+    return render(request, 'news/news_slider.html', context)

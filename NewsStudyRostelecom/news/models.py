@@ -25,13 +25,14 @@ import datetime
 class PublishedToday(models.Manager):
     def get_queryset(self):
         return super(PublishedToday,self).get_queryset().filter(date__gte=datetime.date.today())
+
 class Article(models.Model):
-    categories = (('E','Экономика'),
+    categories = (('C', 'Культура'),
+                  ('B','Бизнес'),
                   ('S','Наука'),
-                  ('IT','IT'),
+                  ('N','Спорт'),
                   ('T', 'Путешествия'),
-                  ('C', 'Культура'),
-                  ('S', 'Спорт'))
+                  ('W', 'Погода'))
     #поля                           #models.CASCADE SET_DEFAULT
     author = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     title = models.CharField('Название', max_length=50,default='')
@@ -40,9 +41,11 @@ class Article(models.Model):
     date = models.DateTimeField('Дата публикации', auto_now=True)
     category = models.CharField(choices=categories, max_length=25,verbose_name='Категории')
     tags = models.ManyToManyField(to=Tag, blank=True)
+    status = models.BooleanField(default=False, verbose_name='Опубликовано')
     slug = models.SlugField()
     objects = models.Manager()
     published = PublishedToday()
+
     #методы моделей
     def __str__(self):
         return f'{self.title} от: {str(self.date)[:10]}'
