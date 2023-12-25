@@ -50,48 +50,49 @@ class ArticleDetailView(ViewCountMixin, DetailView):
         context['images'] = images
         return context
 
+
 class ArticleUpdateView(UpdateView):
     model = Article
     template_name = 'news/create_article.html'
     fields = ['title','anouncement','text','tags']
 
-    def get_context_data(self, **kwargs):
-        context = super(ArticleUpdateView, self).get_context_data(**kwargs)
-        current_object = self.object
-        images = Image.objects.filter(article=current_object)
-        context['image_form'] = ImagesFormSet(instance=current_object)
-        return context
-
-    def post(self, request, **kwargs):
-        current_object = Article.objects.get(id=request.POST['image_set-0-article'])
-        deleted_ids = []
-        for i in range(int(request.POST['image_set-TOTAL_FORMS'])):  # удаление всех по галочкам
-            field_delete = f'image_set-{i}-DELETE'
-            field_image_id = f'image_set-{i}-id'
-            if field_delete in request.POST and request.POST[field_delete] == 'on':
-                image = Image.objects.get(id=request.POST[field_image_id])
-                image.delete()
-                deleted_ids.append(field_image_id)
-        # тут же удалить изображение из request.FILES
-    # Замена изображения
-        for i in range(int(request.POST['image_set-TOTAL_FORMS'])):  # удаление всех по галочкам
-            field_replace = f'image_set-{i}-image'  # должен быть в request.FILES
-            field_image_id = f'image_set-{i}-id'  # этот файл мы заменим
-            if field_replace in request.FILES and request.POST[
-                field_image_id] != '' and field_image_id not in deleted_ids:
-                image = Image.objects.get(id=request.POST[field_image_id])  #
-                image.delete()  # удаляем старый файл
-                for img in request.FILES.getlist(field_replace):  # новый добавили
-                    Image.objects.create(article=current_object, image=img, title=img.name)
-                del request.FILES[field_replace]  # удаляем использованный файл
-        if request.FILES:  # Добавление нового изображения
-            print('!!!!!!!!!!!!!!!!!', request.FILES)
-            for input_name in request.FILES:
-                for img in request.FILES.getlist(input_name):
-                    print('###############', img)
-                    Image.objects.create(article=current_object, image=img, title=img.name)
-
-        return super(ArticleUpdateView, self).post(request, **kwargs)
+    # def get_context_data(self, **kwargs):
+    #     context = super(ArticleUpdateView, self).get_context_data(**kwargs)
+    #     current_object = self.object
+    #     images = Image.objects.filter(article=current_object)
+    #     context['image_form'] = ImagesFormSet(instance=current_object)
+    #     return context
+    #
+    # def post(self, request, **kwargs):
+    #     current_object = Article.objects.get(id=request.POST['image_set-0-article'])
+    #     deleted_ids = []
+    #     for i in range(int(request.POST['image_set-TOTAL_FORMS'])):  # удаление всех по галочкам
+    #         field_delete = f'image_set-{i}-DELETE'
+    #         field_image_id = f'image_set-{i}-id'
+    #         if field_delete in request.POST and request.POST[field_delete] == 'on':
+    #             image = Image.objects.get(id=request.POST[field_image_id])
+    #             image.delete()
+    #             deleted_ids.append(field_image_id)
+    #     # тут же удалить изображение из request.FILES
+    # # Замена изображения
+    #     for i in range(int(request.POST['image_set-TOTAL_FORMS'])):  # удаление всех по галочкам
+    #         field_replace = f'image_set-{i}-image'  # должен быть в request.FILES
+    #         field_image_id = f'image_set-{i}-id'  # этот файл мы заменим
+    #         if field_replace in request.FILES and request.POST[
+    #             field_image_id] != '' and field_image_id not in deleted_ids:
+    #             image = Image.objects.get(id=request.POST[field_image_id])  #
+    #             image.delete()  # удаляем старый файл
+    #             for img in request.FILES.getlist(field_replace):  # новый добавили
+    #                 Image.objects.create(article=current_object, image=img, title=img.name)
+    #             del request.FILES[field_replace]  # удаляем использованный файл
+    #     if request.FILES:  # Добавление нового изображения
+    #         print('!!!!!!!!!!!!!!!!!', request.FILES)
+    #         for input_name in request.FILES:
+    #             for img in request.FILES.getlist(input_name):
+    #                 print('###############', img)
+    #                 Image.objects.create(article=current_object, image=img, title=img.name)
+    #
+    #     return super(ArticleUpdateView, self).post(request, **kwargs)
 
 
 class ArticleDeleteView(DeleteView):

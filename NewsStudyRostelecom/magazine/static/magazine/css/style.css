@@ -58,7 +58,7 @@ div{overflow:hidden}
 .search #search_form{}
 .search #s{width:87%}
 .search #searchform{background:url("images/search.png") no-repeat scroll 0 0 rgba(0,0,0,0); border:medium none; height:28px; margin-left:-4px; text-indent:-99999px; width:13%}
-.main_menu_area{overflow:visible; background:#302a32; min-height:50px; width:auto;}
+.main_menu_area{overflow:visible; background:#302a32; min-height:50px; width:auto; margin-right:10px;}
 .main_menu_area ul{margin:0; padding:0; list-style:none}
 .main_menu_area ul li{float:left; position:relative}
 .main_menu_area ul li a{color:#FFF; display:block; font-family:'bebasregular'; font-size:15px; padding:18px 18.7px}
@@ -85,7 +85,7 @@ div{overflow:hidden}
 .left_coloum{width:450px}
 .single_left_coloum_wrapper{position:relative; margin-left:-10px; margin-bottom:30px}
 .single_left_coloum_wrapper .title{margin-left:10px}
-.title{border-bottom:4px solid #CF0000; font-family:'bebasregular'; font-size:20px; word-spacing:2px}
+.title{border-bottom:1px dotted #000; font-family:'bebasregular'; font-size:20px; word-spacing:2px; margin-bottom:30px; margin-top:10px;}
 .more{background:url("images/plus.png") no-repeat scroll 57px 9px #CF0000; color:#FFF; display:block; font-size:10px; font-weight:bold; padding:4px 20px; position:absolute; right:0; text-transform:uppercase; top:10px}
 .popular_more{background:url("images/plus.png") no-repeat scroll 57px 12px #CF0000; color:#FFF; display:block; font-size:10px; font-weight:bold; padding:7px 20px; text-transform:uppercase; width:100px; margin-top:10px}
 .single_left_coloum{margin-left:10px; width:143px}
@@ -126,23 +126,14 @@ div{overflow:hidden}
 .single_popular h3{line-height:17px; margin-top:0}
 .footer_top_area{border-bottom:1px dotted #000; padding:20px 0; width:940px}
 .inner_footer_top{width:730px; margin:0 auto}
-
-.footer_menu{margin-bottom:20px}
-.footer_menu ul{margin:0; padding:0; list-style:none}
-.footer_menu ul li{border-right:1px solid #000; display:inline}
-.footer_menu ul li:last-child{border-right:none}
-.footer_menu ul li a{display:inline-block; padding:0 22px}
-.footer_menu ul li a:hover{}
 .copyright_text{line-height:17px; text-align:center}
 .contact_form{float:left; margin: 10px 10%; width:80%}
-
 #header {background: #000000; color: white;}
 div.breadcrumbs {
    background: #000000;
 }
 .module caption{
 background: #000000;}
-
 .form-group label {
    float: left;
    text-align: left;
@@ -154,3 +145,11 @@ background: #000000;}
    vertical-align: middle;
 }
 .d-none d-lg-block{color: white;}
+.article{
+  margin:5px;
+  padding:20px;
+  background-color:#eee;
+  border-style:solid;
+  border-width:1px;
+  text-align:justify;
+}

@@ -18,10 +18,11 @@
     <link rel="stylesheet" type="text/css" href="{% static 'magazine/css/jquery.bxslider.css' %}" media="screen" />
     <script src="https://kit.fontawesome.com/b91fb3443a.js" crossorigin="anonymous"></script>
 </head>
+{% block header %} {% include 'magazine/header.html' %} {% endblock %}
+{% block sidebar %} {% include 'magazine/sidebar.html' %} {% endblock %}
 <body style="background-color:#202020;>
 <div class="body_wrapper">
-{% block header %} {% include 'magazine/header.html' %} {% endblock %}
-        {% block sidebar %} {% include 'magazine/sidebar.html' %} {% endblock %}
+
     <div class="center">
 
         <div class="content_area">
@@ -46,33 +47,17 @@
                     </div>
                     <div class="col-lg-3">
                         {% if user.is_active == True %}
-                            <p><small><strong>Опубликовано: <font color="red">{{ n.status }}</font></strong></small></p>
-                            <p><small><strong>Просмотры: <font color="red">{{ n.get_views }}</font></strong></small></p>
-                            <p><a class="btn btn-danger" href="{% url 'favorites' n.pk %}"><i class="fa-solid fa-heart"> В избранное</i></a></p>
+                        <br>
+                            <p class="readmore" style="color:black"><i class="fa-solid fa-eye"> {{ n.get_views }}</i></p>
+                            <p><a class="btn btn-success" href="{% url 'favorites' n.pk %}"><i class="fa fa-bookmark">В избранное</i></a></p>
                         {% endif %}
                     </div>
-                    <div class="col-lg-5">
-                        {% if request.user.id %}
-                        {% if user.is_staff == True %}
-                        <a class="readmore"
-                           href="http://127.0.0.1:8000/admin/news/article/{{ n.id }}/change/"
-                           target="_blank">Редактировать новость в панели администратора...</a>
-                    </div>
-                    <div class="col-lg-4">
-                        <p><a class="readmore" href="{% url 'news_update' n.pk %}">Редактировать новость на
-                            сайте...</a></p>
-                    </div>
-                    {% else %}
-                    {% endif %}
-                    {% endif %}
-                </div>
-                <hr>
                 {% endif %}
                 {% endif %}
                 {% endfor %}<br>
             </div>
             <br>
-            <h6 class="title"></h6>
+
             {% block footer %} {% include 'magazine/foot.html' %} {% endblock %}
         </div>
     </div>

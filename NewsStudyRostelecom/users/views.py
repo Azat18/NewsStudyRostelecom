@@ -28,6 +28,20 @@ def add_to_favorites(request, id):
         messages.success(request,f"Новость {article.title} добавлена в закладки")
     return HttpResponseRedirect(request.META['HTTP_REFERER'])
 
+@login_required
+def favorites_list(request):
+    favorite_articles = FavoriteArticle.objects.filter(user=request.user)
+    articles = [favorite_article.article for favorite_article in favorite_articles]
+    total = len(articles)
+    p = Paginator(articles, 4)
+    page_number = request.GET.get('page')
+    page_obj = p.get_page(page_number)
+    context = {
+        'articles': page_obj,
+        'total': total,
+    }
+    return render(request, 'users/favoritearticle_list.html',context)
+
 from .utils import check_group
 # @check_group('Authors')
 def profile_update(request):
@@ -82,7 +96,7 @@ def registration(request):
             user = authenticate(username=username, password=password)
             login(request, user)
             messages.success(request,f'{username} был зарегистрирован!')
-            return redirect('/magazine')
+            return redirect('/news/slider')
     else:
         form = UserCreationForm()
     context = {'form':form}
