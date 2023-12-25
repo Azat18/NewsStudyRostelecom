@@ -1,0 +1,184 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+{% load static %}
+{% load bootstrap5 %}
+{% block title %} Новости {% endblock %}
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+{%bootstrap_css%}
+{%bootstrap_javascript%}
+
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="stylesheet" type="text/css" href="{% static 'magazine/font/font-awesome.min.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'magazine/font/font.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'magazine/css/bootstrap.min.css' %}" media="screen" />
+<link rel="stylesheet" type="text/css" href="{% static 'magazine/css/style.css' %}" media="screen" />
+<link rel="stylesheet" type="text/css" href="{% static 'magazine/css/responsive.css' %}" media="screen" />
+<link rel="stylesheet" type="text/css" href="{% static 'magazine/css/jquery.bxslider.css' %}" media="screen" />
+<script src="https://kit.fontawesome.com/b91fb3443a.js"></script>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous">
+</script>
+
+
+
+{% block body %}
+{% include 'magazine/header.html' %}
+{% block sidebar %} {% include 'magazine/sidebar.html' %} {% endblock %}
+
+<body style="background-color:#202020;">
+
+<div class="body_wrapper">
+    <div class="center">
+
+        <div class="container">
+            <div class="content_area">
+                {% if articles|length != 0 %}
+                {% if user.is_active == True %}
+                <h2 class="title">ИЗБРАННОЕ</h2>
+                {% endif %}
+                <!--pagination-->
+                {% if total > 1 %}
+                <nav aria-label="Навигация по списку новостей" pagination-border-color='red'>
+                    <div class="text-center">
+                        <ul class="pagination pagination-lg">
+                            {% if articles.has_previous %}
+                            <li class="page-item"><a class="page-link" href="?page={{ articles.previous_page_number }}"><span
+                                    aria-hidden="true">&laquo;</span></a>
+                            </li>
+                            {% endif %}
+                            {% for p in articles.paginator.page_range %}
+                            {% if articles.number == p %}
+                            <li class="page-item"><a class="page-link" style="color:black;"> {{ p }}</a></li>
+                            {% else %}
+                            <li class="page-item"><a class="page-link" href="?page={{ p }}"> {{ p }}</a></li>
+                            {% endif %}
+                            {% endfor %}
+                            {% if articles.has_next %}
+                            <li class="page-item"><a class="page-link"
+                                                     href="?page={{ articles.next_page_number }}"><span
+                                    aria-hidden="true">&raquo;</span></a></li>
+                            {% endif %}
+                        </ul>
+                    </div>
+                </nav>
+                {% endif %}
+                <!--end pagination-->
+                {% for n in articles %}
+                {% if n.image_set.all %}
+                <hr>
+                <div class="row">
+                    <div class="col-lg-3">
+                        <!--carousel-->
+                        <div id="carouselControls" class="carousel slide" data-bs-ride="carousel">
+                            <div class="carousel-inner">
+                                {% for image in n.image_set.all %}
+                                <div class="carousel-item {% if forloop.counter == 1 %} active {% endif %}">
+                                    <a href="{{ n.get_absolute_url }}">
+                                        <img src="{{ image.image.url }}" class="d-block w-100"
+                                             style="margin:auto; height:150px; width:auto; border-radius:5px;" alt=""/>
+                                    </a>
+                                </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        <!--end carousel-->
+                        <hr>
+                        <p class="readmore" style="color:black">{{ n.author.account.nickname }}</p>
+                        {% if n.status == True %}
+                        <p><strong><i><small>Дата публикации: {{ n.date.date }}</></small></i></strong></p>
+                        {% endif %}
+                        <p class="readmore" style="color:black"><i class="fa-solid fa-eye"> {{ n.get_views }}</i></p>
+                        {% if user.is_active == True %}
+                        <p><a class="btn btn-success" href="{% url 'favorites' n.pk %}"><i class="fa fa-bookmark"> Удалить из избранного</i></a></p>
+                        {% endif %}
+                    </div>
+                    <div class="col-lg-9">
+                        <h4><strong><a href="{{ n.get_absolute_url }}">{{ n.title }}</a></strong></h4>
+                        <h5><p align="justify">{{ n.anouncement }}</p><br></h5>
+                    </div>
+                </div>
+                {% endif %}
+                {% endfor %}<br>
+                {% else %}
+                <div class="container-fluid">
+                    <div class="row">
+                        {% if article.title == None %}
+                        {% if user.is_active == True %}
+                        <div class="container" align="center">
+                            <p>
+                            <h1>У вас нет избранных новостей.</h1></p>
+                            <p align="center"><a class="btn btn-danger" href="{% url 'news_index' %}"> Выбрать?</a></p>
+                        </div>
+                        {% endif %}
+                        {% endif %}
+                    </div>
+                </div>
+                {% endif %}
+                <h2 class="title"></h2>
+            </div>
+                   </div>
+    </div>
+</div>
+<script type="text/javascript" src="{% static 'main/' %}assets/js/jquery-min.js"></script>
+<script type="text/javascript" src="{% static 'main/' %}assets/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="{% static 'main/' %}assets/js/jquery.bxslider.js"></script>
+<script type="text/javascript" src="{% static 'main/' %}assets/js/selectnav.min.js"></script>
+<script type="text/javascript">
+    selectnav('nav', {
+        label: 'Меню',
+        nested: true,
+        indent: ''
+    });
+    selectnav('f_menu', {
+        label: 'Меню',
+        nested: true,
+        indent: ''
+    });
+    $('.bxslider').bxSlider({
+        mode: 'fade',
+        captions: true
+    });
+</script>
+<script src="https://kit.fontawesome.com/b91fb3443a.js" crossorigin="anonymous"></script>
+<script src="https://kit.fontawesome.com/b91fb3443a.js" crossorigin="anonymous"></script>
+<!-- jQuery !-->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+<!-- jQuery UI !-->
+<link rel="stylesheet"
+      href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+<script>
+    $(function() {
+        $("#search_input").autocomplete({
+            source: "search_auto/",
+            select: function (event, ui) { //item selected
+                AutoCompleteSelectHandler(event, ui)
+            },
+            minLength: 2,
+        });
+    });
+
+  function AutoCompleteSelectHandler(event, ui)
+  {
+    var selectedObj = ui.item;
+  }
+</script>
+
+
+</body>
+{% block footer %} {% include 'magazine/foot.html' %} {% endblock %}
+{% endblock %}
